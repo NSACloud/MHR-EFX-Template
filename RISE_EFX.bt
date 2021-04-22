@@ -1,0 +1,3734 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.1 Binary Template
+//
+//      File: 
+//   Authors: NSA Cloud
+//   Version: V1
+//   Purpose: Monster Hunter Rise EFX
+//  Category: 
+// File Mask: *.efx.2621987
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+//GitHub: https://github.com/NSACloud/MHR-EFX-Template
+//Monster Hunter Modding Discord: https://discord.gg/gJwMdhK
+/*
+NOTES:
+If you map any of the unknowns, submit a pull request or issue on GitHub and I'll add the changes.
+
+Set the character set to UTF-8 in View > Character Set
+
+Not all attribute structs are mapped yet. Some that are mapped are not mapped correctly.
+
+The template will get an error if a struct is unmapped or if a struct ends too early or too late.
+
+If you get an error, look at unknSeqNum on the efx entries, the numbers usually have a pattern. If the values between two attributes vary significantly, something is probably wrong with the struct. 
+
+
+For unmapped structs, use find to search for the struct name.
+
+
+ISSUES:
+Many structs are unmapped.
+All attributes need to be tested and labeled.
+TypeMesh struct is wrong for some files
+TypeMeshClip struct is wrong for some files
+Expression Structs are variable in length and may not be mapped correctly
+Clip Structs are variable in length and may not be mapped correctly
+The user variable section of the EOF struct isn't always correct, so it's commented out
+*/
+
+
+/*
+Files that break the template:
+*List might be incomplete
+
+4,natives\NSW\vfx\editor\efd_em\efd_em094\efd_0004_em094_00_0010.efx.2621987
+4,natives\NSW\vfx\editor\efd_em\efd_em093\efd_0004_em093_00_0001.efx.2621987
+144,natives\NSW\vfx\editor\efd_em\efd_em102\efd_0004_em102_00_0011.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_ems090\efd_0004_ems090_00_0002.efx.2621987
+152,natives\NSW\vfx\editor\efd_em\efd_em057\efd_0004_em057_00_0040.efx.2621987
+4,natives\NSW\vfx\editor\efd_em\efd_em094\efd_0004_em094_00_0001.efx.2621987
+4,natives\NSW\vfx\editor\efd_em\efd_em096\efd_0004_em096_00_0030.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em004\efd_0004_em004_00_0018.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em099\efd_0004_em099_00_0810.efx.2621987
+4,natives\NSW\vfx\editor\efd_em\efd_ems092\efd_0004_ems092_00_0000.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em089\efd_0004_em089_00_0050.efx.2621987
+152,natives\NSW\vfx\editor\efd_em\efd_em057\efd_0004_em057_00_0041.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em091\efd_0004_em091_00_0016.efx.2621987
+152,natives\NSW\vfx\editor\efd_em\efd_em099\efd_0004_em099_00_1011.efx.2621987
+172,natives\NSW\vfx\editor\efd_em\efd_em_cm\efd_0004_em_cm_00_0051.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em004\efd_0004_em004_00_0020.efx.2621987
+172,natives\NSW\vfx\editor\efd_em\efd_em097\efd_0004_em097_00_0031.efx.2621987
+172,natives\NSW\vfx\editor\efd_em\efd_em_cm\efd_0004_em_cm_00_0050.efx.2621987
+4,natives\NSW\vfx\editor\efd_em\efd_em094\efd_0004_em094_00_0002.efx.2621987
+172,natives\NSW\vfx\editor\efd_em\efd_em097\efd_0004_em097_00_0005.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em004\efd_0004_em004_00_0021.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em099\efd_0004_em099_00_0403.efx.2621987
+109,natives\NSW\vfx\editor\efd_em\efd_em089\efd_0004_em089_00_0006.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em089\efd_0004_em089_00_0000.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em004\efd_0004_em004_00_0023.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em099\efd_0004_em099_00_0800.efx.2621987
+999,natives\NSW\vfx\editor\efd_em\efd_em082\efd_0004_em082_07_0005.efx.2621987
+999,natives\NSW\vfx\editor\efd_st\efd_st-hyakuryu\efd_0004_st-hyakuryu_20_0000.efx.2621987
+999,natives\NSW\vfx\editor\efd_st\efd_st-hyakuryu\efd_0004_st-hyakuryu_20_0000.efx.2621987
+999,natives\NSW\vfx\editor\efd_st\efd_st-hyakuryu\efd_0004_st-hyakuryu_12_0001.efx.2621987
+999,natives\NSW\vfx\editor\efd_evc\efd_evc1004\efd_0004_evc1004_00_0005.efx.2621987
+17,natives\NSW\vfx\editor\efd_evc\efd_evc1021\efd_0004_evc1021_00_0009.efx.2621987
+17,natives\NSW\vfx\editor\efd_evc\efd_evc1021\efd_0004_evc1021_01_0109.efx.2621987
+4,natives\NSW\vfx\editor\efd_evc\efd_evc1028\efd_0004_evc1028_01_0005.efx.2621987
+17,natives\NSW\vfx\editor\efd_evc\efd_evc1029\efd_0004_evc1029_01_0101.efx.2621987
+999,natives\NSW\vfx\editor\efd_evc\efd_evc1033\efd_0004_evc1033_01_0003.efx.2621987
+999,natives\NSW\vfx\editor\efd_evc\efd_evc1038\efd_0004_evc1038_00_0011.efx.2621987
+999,natives\NSW\vfx\editor\efd_evc\efd_evc3007\efd_0004_evc3007_00_0003.efx.2621987
+999,natives\NSW\vfx\editor\efd_evc\efd_evc3024\efd_0004_evc3024_02_0010.efx.2621987
+
+*/
+
+
+
+//UTILITY STRUCTS
+typedef struct
+{
+    ubyte red<bgcolor=0x111199,fgcolor=0x0000FF>;
+    ubyte green<bgcolor=0x119911,fgcolor=0x00FF00>;
+    ubyte blue<bgcolor=0x991111,fgcolor=0xFF0000>;
+    ubyte alpha<bgcolor=0x111111,fgcolor=0xAAAAAA>;
+}Color<read=ReadColor>;
+
+typedef struct
+{
+    float x;
+    float y;
+    float z;
+}floatXYZ<read=ReadFloatXYZ>;
+
+typedef struct
+{
+    int x;
+    int y;
+    int z;
+}intXYZ<read=ReadIntXYZ>;
+
+void ReadEFXAttribute()
+{
+    local uint itemType = ReadUInt();
+    //Printf("Item type: %i\n",itemType);
+    GetEFXItemStruct(itemType);
+}
+
+
+//EFX STRUCTS
+
+typedef struct
+{
+    char type[4];
+    int unkn0;//constant
+    uint entryCount<bgcolor=0x22AA22>;
+    uint entryLength<bgcolor=0x22AA22>;
+    uint actionCount;
+    uint fieldParameterCount;//Amount of "Field" efx attributes
+    uint unknParameterCount<bgcolor=0x226622>;
+    uint collisionEffectCount<bgcolor=0x224422>;
+    uint collisionEffectLength;
+    uint boneCount<bgcolor=0x226622>;
+    uint unknEntryCount;
+    uint unkn8;
+}Header<bgcolor=0x2f4f4f>;
+typedef struct
+{
+    string str;
+}EntryName<bgcolor=0x22AA22,optimize=false>;
+typedef struct
+{
+    string str;
+    wstring unicodeStr;
+}UnicodeEntryName<bgcolor=0x226622,optimize=false>;
+typedef struct
+{
+    string str;
+    wstring widestring;
+}WideString<bgcolor=0x226622,optimize=false>;
+
+
+typedef struct 
+{       
+        if (header.unknParameterCount > 0)
+        UnicodeEntryName unkn_parameter_name[header.unknParameterCount]<read=ReadUnicodeEntry>;
+        if (header.boneCount > 0)
+        UnicodeEntryName bone_name[header.boneCount]<read=ReadUnicodeEntry>;
+        if (header.actionCount > 0)
+        EntryName action_name[header.actionCount]<read=ReadStr>;
+        if (header.fieldParameterCount > 0)
+        EntryName field_parameter_name[header.fieldParameterCount]<read=ReadStr>;
+        if (header.entryCount > 0)
+        EntryName efx_name[header.entryCount]<read=ReadStr>;
+        if (header.collisionEffectCount > 0)
+        EntryName collision_effect_name[header.collisionEffectCount]<read=ReadStr>;
+}EntryNames;
+
+typedef struct
+{
+    
+    if (header.unknParameterCount != 0)
+    {
+        struct
+        {
+            uint unkn0;//uint64 hash?
+            uint unkn1;
+            uint unkn2;
+            uint unkn3;
+            uint unkn4;
+            uint unkn5;
+                    
+        }unknParameterValues[header.unknParameterCount];
+    }
+
+     if (header.boneCount != 0)
+    {
+        struct
+        {
+            uint64 unkn0;//uint64 hash?
+                
+        }boneValues[header.boneCount];
+    }
+
+    short unknEFXValue[header.unknEntryCount];   
+}SubHeader<bgcolor=0xffdddd>;
+typedef struct
+{
+    uint actionUnkn0;
+    uint actionUnkn1;
+    uint actionAttributeCount;
+    ReadEFXAttribute();
+}Action;
+typedef struct
+{
+    local uint currentEntryIndex = parentof(this).i;
+    uint unkn0;
+    uint unkn1;
+    uint unkn2;
+    uint unkn3;
+    uint unkn4;
+    uint unkn5;
+    uint unkn6;
+    uint unkn7;
+    float unkn8;
+    float unkn9;
+    float unkn10;
+}FieldParameterValue<read=ReadFieldParameter>;
+
+typedef struct 
+{
+    local int i;
+    for(i=0;i<header.fieldParameterCount;i++)
+    {
+        FieldParameterValue fieldParameter;
+    }
+    
+}FieldParameterValues;
+typedef struct
+{
+    local uint currentEntryIndex = parentof(this).i;
+    uint entryIndex;
+    uint entryHeaderUnkn1;
+    uint entryHeaderUnkn2;   
+    int attributeCount<bgcolor=0x00dddd>;
+    local int i;
+    for(i=0;i<attributeCount;i++)
+    {
+        ReadEFXAttribute();
+    }
+}EFXEntry<bgcolor=0x000000,read=ReadEFXEntry>;
+
+typedef struct
+{
+local int i;
+    for(i=0;i<header.entryCount;i++)
+    {
+        EFXEntry entry;
+    }
+}EFXEntries;
+typedef struct
+{
+    local uint currentEntryIndex = parentof(this).i;
+    uint unkn0;
+    uint unkn1;
+    uint valueCount;
+    uint value[valueCount];
+}CollisionEffect<read=ReadCollisionEffect>;
+
+typedef struct 
+{
+    local int i;
+    for(i=0;i<header.collisionEffectCount;i++)
+    {
+        CollisionEffect collisionEffect<optimize=false>;
+    }
+    
+}CollisionEffects;
+
+typedef struct
+{
+    uint uvarStringCount;//This seems to be a count of uservariable strings on the end of the file
+    ubyte eof[4];
+
+    //Some files have the uvarString count higher than 0 but have no strings.
+    //Uncomment the section below to test it
+    
+    /*
+    if (uvarStringCount != 0)
+    {
+        struct
+        {
+            uint stringLength;
+            wstring uvarString;
+        }uvarString[uvarStringCount]<optimize=false>;
+    }
+    */
+}EOF<bgcolor=0x000000>;
+
+
+typedef struct
+{
+    Header header;
+    EntryNames strings<optimize=false>;
+    SubHeader subheader;
+    if (header.actionCount != 0)
+    {
+        Action action[header.actionCount]<optimize=false, bgcolor=0x0000FF>;
+    }
+    if (header.fieldParameterCount != 0)
+    {
+        FieldParameterValues fieldParameterValues<optimize=false, bgcolor=0xAAFFAA>;
+    }
+    EFXEntries mainBody;
+    if (header.collisionEffectCount != 0)
+    {
+        CollisionEffects collisionEffects<bgcolor=0xEEBBEE>;
+    }
+    
+    EOF eof;
+    
+}EFXR<optimize=false>;
+
+//READ FUNCTIONS
+
+string ReadStr(EntryName& input){
+    string s;
+    SPrintf(s, "%s", input.str);
+    return s;
+};
+string ReadUnicodeEntry(UnicodeEntryName& input){
+    string s;
+    SPrintf(s, "%s", input.str);
+    return s;
+};
+string ReadFloatXYZ(floatXYZ& input){
+    string s;
+    SPrintf(s, "X:%f Y:%f Z:%f", input.x,input.y,input.z);
+    return s;
+};
+string ReadIntXYZ(intXYZ& input){
+    string s;
+    SPrintf(s, "X:%i Y:%i Z:%i", input.x,input.y,input.z);
+    return s;
+};
+string ReadColor(Color& input){
+    string s;
+    SPrintf(s, "RGBA: %u,%u,%u,%u", input.red,input.green,input.blue,input.alpha);
+    return s;
+};
+string ReadEFXEntry(EFXEntry& input){
+    string s;
+    SPrintf(s, "%s", parentof(parentof(input)).strings.efx_name[input.currentEntryIndex].str);
+    return s;
+};
+string ReadFieldParameter(FieldParameterValue& input){
+    string s;
+    SPrintf(s, "%s", parentof(parentof(input)).strings.field_parameter_name[input.currentEntryIndex].str);
+    return s;
+};
+string ReadCollisionEffect(CollisionEffect& input){
+    string s;
+    SPrintf(s, "%s", parentof(parentof(input)).strings.collision_effect_name[input.currentEntryIndex].str);
+    return s;
+};
+void writeErrorToFile(int errorNum)//debug
+{   
+    //Uncomment to write failed structs to a file when an error occurs
+
+    /*
+
+    local string errorOutputPath = "F:\\MHR_EXTRACT\\efxErrorList.csv";
+    local int currentFile = GetFileNum();
+    local string s;
+    SPrintf(s,"%i,%s\n",errorNum,GetFileName());
+    
+    if (FileExists(errorOutputPath))
+    {
+        FileSelect(FileOpen(errorOutputPath,false));
+    }
+    else
+    {
+        FileSelect(FileNew());
+    }
+    
+    WriteString(FileSize(),s);
+    FileSave(errorOutputPath);
+    FileSelect(currentFile);
+
+    */
+
+    if (errorNum == 999)
+    {
+        uint64 STRUCT_ERROR<bgcolor=0x0000FF,fgcolor=0x000000,comment="One of the previous structs is wrong. If this is an unchanged file, please report it.">;
+    }
+    else
+    {
+        uint64 UNMAPPED_STRUCT<bgcolor=0x0000FF,fgcolor=0x000000,comment="Struct ID is unmapped. Check that the previous struct is correct before mapping it.">;
+    }
+    Exit(errorNum);
+}
+//EFX ITEM TYPE STRUCTS 
+void GetEFXItemStruct(int itemType)
+{
+    switch(itemType)
+    {
+	    case 1:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[10];
+    
+		    }FixRandomGenerator<bgcolor=0x08a9e5>;//Example: natives\NSW\vfx\editor\efd_pl\efd_h-bg\efd_0004_h-bg_20_0000.efx.2621987
+    
+	    };break;
+	    case 2:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1;
+                int unkn2;
+                int unkn3;
+                int pathLength;
+                wstring shaderPath;
+    
+		    }EffectOptimizeShader<bgcolor=0xe23209>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 3:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                int instancesSpawnedTotal;//Unconfirmed
+                int instancesSpawnedPerFrame;//Unconfirmed
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int unkn7;
+                int unkn8;
+                int unkn9;
+                int unkn10;
+			   
+    
+		    }Spawn<bgcolor=0x85aa32>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 4:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(4);
+    
+		    }SpawnExpression<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 5:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                float pos_x;
+                float pos_y;
+			    float rot;
+                float scale_x;
+                float scale_y;
+    
+		    }Transform2D<bgcolor=0xe78607>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0013\efd_0004_evc0013_00_0004.efx.2621987
+    
+	    };break;
+	    case 6:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint frameDelay;
+                uint unkn1;
+    
+		    }Transform2DModifierDelayFrame<bgcolor=0xef6ade>;
+    
+	    };break;
+	    case 7:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(7);
+    
+		    }Transform2DModifier<bgcolor=0xe23209>;
+    
+	    };break;
+	    case 8:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(8);
+    
+		    }Transform2DClip<bgcolor=0xe78607>;
+    
+	    };break;
+	    case 9:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(9);
+    
+		    }Transform2DExpression<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 10:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                floatXYZ Translation;
+                floatXYZ Rotation;
+                floatXYZ Scale;
+	            uint unkn1;
+    
+		    }Transform3D<bgcolor=0x731727>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 11:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint frameDelay;
+                uint unkn1;
+    
+		    }Transform3DModifierDelayFrame<bgcolor=0x731727>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc1011\efd_0004_evc1011_00_0000.efx.2621987
+    
+	    };break;
+	    case 12:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                float unkn1[55];
+    
+		    }Transform3DModifier<bgcolor=0xfd1e6e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 13:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                int unkn0;
+                int unkn1;
+                int unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int substruct1Length;
+                int substruct2Length;
+                int substruct3Length;
+                if (substruct1Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct1Length/4];
+                    }substruct1;
+                }
+                 if (substruct2Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct2Length/4];
+                    }substruct2;
+                }
+                 if (substruct3Length > 0)
+                {
+                    struct
+                    {
+                        float substructValue[substruct3Length/4];
+                    }substruct3;
+                }	
+    
+		    }Transform3DClip<bgcolor=0xfd1e6e>;//Example: natives\NSW\vfx\editor\efd_cm\efd_0004_cm_00_9150.efx.2621987
+    
+	    };break;
+	    case 14:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+			    int unkn1;
+                int unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int unkn7;
+                int unkn8;
+                int unkn9;
+                int unkn10;
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }Transform3DExpression<optimize=false,bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 15:
+	    {
+		    struct//unconfirmed
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                intXYZ TranslationTrackingMode;
+                intXYZ RotationTrackingMode;
+                intXYZ ScaleTrackingMode;
+			    ubyte unkn1;
+                float unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int unkn7;
+                int unkn8;
+                int boneNameLength;
+                wstring boneName;
+		    }ParentOptions<bgcolor=0x7a5736>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 16:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                uint unkn2;
+                Color color;
+    
+		    }EmitterColor<bgcolor=0x2a6866>;//Example: F:\MHR_EXTRACT\extract\re_chunk_000\natives\NSW\vfx\editor\efd_evc\efd_evc1021\efd_0004_evc1021_00_0008.efx.2621987
+    
+	    };break;
+	    case 17:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(17);
+    
+		    }EmitterColorClip<bgcolor=0xe23209>;
+    
+	    };break;
+	    case 18:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                
+		    }PtSort<bgcolor=0x363669>;//Example: natives\NSW\vfx\editor\efd_hm\efd_hm04\efd_0004_hm04_006_00_0000.efx.2621987
+    
+	    };break;
+	    case 19:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                Color color0;
+                Color color1;
+                uint unkn2[13];
+    
+		    }TypeBillboard2D<bgcolor=0x3f16f9>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0013\efd_0004_evc0013_00_0004.efx.2621987
+    
+	    };break;
+	    case 20:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(20);
+    
+		    }TypeBillboard2DExpression<bgcolor=0x0a2c0f>;
+    
+	    };break;
+	    case 21:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                int unkn1;
+                Color color0;
+                Color color1;
+                float unkn2;
+                float unkn3;
+                float unkn4;
+                float unkn5;
+	    		float unkn6;
+                float unkn7;
+                float unkn8;
+                float unkn9;
+                float unkn10;
+                float unkn11;
+                float unkn12;
+                float unkn13;
+                float unkn14;
+                float unkn15;
+                float unkn16;    
+    
+		    }TypeBillboard3D<bgcolor=0x85aa32>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 22:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[21];
+    
+		    }TypeBillboard3DExpression<bgcolor=0x0a2c0f>;
+    
+	    };break;
+	    case 23:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(23);
+    
+		    }TypeBillboard3DMaterial<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 24:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(24);
+    
+		    }TypeBillboard3DMaterialClip<bgcolor=0xf57685>;
+    
+	    };break;
+	    case 25:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(25);
+    
+		    }TypeBillboard3DMaterialExpression<bgcolor=0x3f16f9>;
+    
+	    };break;
+	    case 26:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                int unkn1;
+                Color color0;
+                Color color1;
+                float unkn4;
+                Color color2;
+                float unkn6;
+                int unkn7;
+                int unkn8;
+                int unkn9;
+                floatXYZ unkn10;//scale?                        
+                int unkn11;
+                int unkn12;
+                int unkn13;
+                int unkn14;
+                int unkn15;
+                int unkn16;
+                int unkn17;
+                int unkn18;
+                int unkn19;
+                float unkn20;
+                float unknX1;
+                float unknX2;
+                float unknY1;
+                float unknY2;
+                float unknZ1;
+                float unknZ2;
+                float unkn21;
+                int unkn22;
+                int unkn23;
+                int unkn24;
+                int texCount;
+                int meshPathLength;
+                wstring meshPath;
+			    int unknPathLength;
+                wstring unknPath;
+                int mdfPathLength;
+                wstring mdfPath;
+                if (texCount != 0)
+                {
+                    struct
+                    {
+                        int offset;
+                        float texparam[offset/4];
+                    }TexParams<optimize=false>;
+                   
+                }
+                int texPathLength;
+                if (texCount != 0)
+                {
+                    struct
+                    {
+                        wstring path;
+                    }TexPath[texCount]<optimize = false>;
+                }
+                else
+                {
+                    uint hash;
+                    if (texPathLength != 0)
+                    {
+                        struct
+                        {
+                            uint substructValue[texPathLength/4];
+                        }substruct;
+                    }
+                    
+                }
+		    }TypeMesh<bgcolor=0x02b72e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 27:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+			    uint unkn1;
+                uint unkn2;
+                int unkn3;
+                float unkn4;
+                uint substruct1Count;
+                uint substruct2Count;
+                uint substruct3Count;
+                uint substruct1Length;
+                uint substruct2Length;
+                uint substruct3Length;
+                uint substruct4Count;
+                if (substruct1Count != 0)
+                {
+                    struct
+                    {
+                        uint unkn0;
+                        uint unkn1;
+                    }substruct1[substruct1Count];
+                }
+                if (substruct2Count != 0)
+                {
+                    struct
+                    {
+                        float unkn0;
+                        uint unkn1;
+                        float unkn2;
+                    }substruct2[substruct2Count];//Can be either floats or ints
+                }
+                if (substruct3Count != 0)
+                {
+                    struct
+                    {
+                        float unkn0;
+                        float unkn1;
+                        float unkn2;
+                        float unkn3;
+                    }substruct3[substruct3Count];
+                }
+                if (substruct4Count != 0)
+                {
+                    struct
+                    {
+                        uint unkn0;
+                        float unkn1;
+                        float unkn2;
+                        uint unkn3;
+                    }substruct4[substruct4Count];
+                }
+                uint indices[substruct4Count];
+    
+		    }TypeMeshClip<bgcolor=0xf57685>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 28:
+	    {
+		    struct//This struct works for some files but fails on others
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint substructCount;
+                uint substructLength;
+                uint indicesCount;
+                uint unkn4;
+                int unkn5[23];
+                uint expressionLength;
+                if (expressionLength != 0)
+                ubyte expression[expressionLength];
+                if (substructCount != 0)
+                {
+                    struct
+                    {
+                        //uint unkn0[(substructLength/substructCount)/4];
+                        uint unkn0[substructLength/4];
+                    }substruct<optimize=false>;
+                }
+                if (indicesCount != 0)
+                {
+                    uint indices[indicesCount];
+                }
+                
+		    }TypeMeshExpression<bgcolor=0x85aa32>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 29:
+	    {
+		    struct
+		    {
+			    int unknSeqNum;
+                int unkn1;
+                int unkn2;
+                int unkn3;
+                float unkn4;
+                float unkn5;
+                float unkn6;
+                float unkn7;
+                float unkn8;
+                float unkn9;
+                float unkn10;
+                float unkn11;
+                int unkn12;
+                int unkn13;
+                float unkn14;
+                int unkn15;
+                int unkn16;
+                int unkn17;
+                int unkn18;//Possibly color
+                int unkn19;//Possibly color
+                int unkn20;//Possibly color
+                float unkn21;
+                float unkn22;
+                float unkn23;
+                float unkn24;
+                float unkn25;
+                float unkn26;
+                float unkn27;
+                float unkn28;
+                float unkn29;
+                     
+    
+		    }TypeRibbonFollow<bgcolor=0x3f16f9>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0000.efx.2621987
+    
+	    };break;
+	    case 30:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[36];
+    
+		    }TypeRibbonLength<bgcolor=0xef6ade>;//Example: natives\NSW\vfx\editor\efd_pl\efd_h-bg\efd_0004_h-bg_20_0000.efx.2621987
+    
+	    };break;
+	    case 31:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                Color color0;
+                Color color1;
+                uint unkn2[50];
+    
+		    }TypeRibbonChain<bgcolor=0x363669>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc1015\efd_0004_evc1015_01_0006.efx.2621987
+    
+	    };break;
+	    case 32:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                Color color0;
+                Color color1;
+                uint unkn2[28];
+		    }TypeRibbonFixEnd<bgcolor=0x3a2006>;//Example: natives\NSW\vfx\editor\efd_ot\efd_airou\efd_0004_airou_10_0050.efx.2621987
+    
+	    };break;
+	    case 33:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                Color color0;
+                Color color1;
+                uint unkn2[11];
+    
+		    }TypeRibbonLightweight<bgcolor=0x7a5736>;//Example: natives\NSW\vfx\editor\efd_pl\efd_g-lan\efd_0004_g-lan_05_0010.efx.2621987
+    
+	    };break;
+	    case 34:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(34);
+    
+		    }TypeRibbonParticle<bgcolor=0x2a6866>;
+    
+	    };break;
+	    case 35:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(35);
+    
+		    }TypeRibbonFollowMaterial<bgcolor=0x731727>;
+    
+	    };break;
+	    case 36:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(36);
+    
+		    }TypeRibbonFollowMaterialClip<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 37:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(37);
+    
+		    }TypeRibbonFollowMaterialExpression<bgcolor=0x363669>;
+    
+	    };break;
+	    case 38:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(38);
+    
+		    }TypeRibbonLengthMaterial<bgcolor=0x056e12>;
+    
+	    };break;
+	    case 39:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(39);
+    
+		    }TypeRibbonLengthMaterialClip<bgcolor=0x0a2c0f>;
+    
+	    };break;
+	    case 40:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(40);
+    
+		    }TypeRibbonLengthMaterialExpression<bgcolor=0x0a2c0f>;
+    
+	    };break;
+	    case 41:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(41);
+    
+		    }TypeRibbonChainMaterial<bgcolor=0x5eac94>;
+    
+	    };break;
+	    case 42:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(42);
+    
+		    }TypeRibbonChainMaterialClip<bgcolor=0x08a9e5>;
+    
+	    };break;
+	    case 43:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(43);
+    
+		    }TypeRibbonChainMaterialExpression<bgcolor=0x2f158b>;
+    
+	    };break;
+	    case 44:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(44);
+    
+		    }TypeRibbonFixEndMaterial<bgcolor=0x363669>;
+    
+	    };break;
+	    case 45:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(45);
+    
+		    }TypeRibbonFixEndMaterialClip<bgcolor=0xe78607>;
+    
+	    };break;
+	    case 46:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(46);
+    
+		    }TypeRibbonFixEndMaterialExpression<bgcolor=0x3a2006>;
+    
+	    };break;
+	    case 47:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(47);
+    
+		    }TypeRibbonLightweightMaterial<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 48:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(48);
+    
+		    }TypeRibbonLightweightMaterialClip<bgcolor=0x08a9e5>;
+    
+	    };break;
+	    case 49:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(49);
+    
+		    }TypeRibbonLightweightMaterialExpression<bgcolor=0xbe9672>;
+    
+	    };break;
+	    case 50:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(50);
+    
+		    }TypeStrainRibbonMaterial<bgcolor=0x08a9e5>;
+    
+	    };break;
+	    case 51:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(51);
+    
+		    }TypeStrainRibbonMaterialClip<bgcolor=0xbe9672>;
+    
+	    };break;
+	    case 52:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[10];
+    
+		    }TypeStrainRibbonMaterialExpression<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 53:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[8];
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }TypeRibbonFollowExpression<bgcolor=0x08a9e5>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0000.efx.2621987
+    
+	    };break;
+	    case 54:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1;
+                int unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int unkn7;
+                int unkn8;         
+                uint expressionLength;
+                ubyte expression[expressionLength];
+		    }TypeRibbonLengthExpression<bgcolor=0x363669>;//Example: natives\NSW\vfx\editor\efd_cm\efd_0004_cm_64_0000.efx.2621987
+    
+	    };break;
+	    case 55:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(55);
+    
+		    }TypeRibbonChainExpression<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 56:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(56);
+    
+		    }TypeRibbonFixEndExpression<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 57:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                uint unkn2;
+                uint unkn3;
+                Color color0;
+                Color color1;
+                uint unkn4[17];
+    
+		    }TypePolygon<bgcolor=0x0a2c0f>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc1003\efd_0004_evc1003_00_0010.efx.2621987
+    
+	    };break;
+	    case 58:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(58);
+    
+		    }TypePolygonClip<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 59:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1[19];
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }TypePolygonExpression<bgcolor=0xef6ade>;//Example: natives\NSW\vfx\editor\efd_pl\efd_c-axe\efd_0004_c-axe_40_0001.efx.2621987
+    
+	    };break;
+	    case 60:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(60);
+    
+		    }TypePolygonMaterial<bgcolor=0x056e12>;
+    
+	    };break;
+	    case 61:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(61);
+    
+		    }TypeRibbonTrail<bgcolor=0x02b72e>;
+    
+	    };break;
+	    case 62:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1;
+                int unkn2;
+                int unkn3;
+                float unkn4;
+                float unkn5;
+                float unkn6;
+                float unkn7;
+                int unkn8;
+                float unkn9;
+                float unkn10;
+                float unkn11;
+                int unkn12;
+                int unkn13;
+                int unkn14;
+                int unkn15;
+                int unkn16;
+                int unkn17;
+                int unkn18;
+                float unkn19;
+                float unkn20;
+                
+                
+    
+		    }TypePolygonTrail<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 63:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(63);
+    
+		    }TypePolygonTrailMaterial<bgcolor=0x3f16f9>;
+    
+	    };break;
+	    case 64:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1[16];
+    
+		    }TypeNoDraw<bgcolor=0x0a2c0f>;
+    
+	    };break;
+	    case 65:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(65);
+    
+		    }TypeNoDrawExpression<bgcolor=0xbe9672>;
+    
+	    };break;
+	    case 66:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(66);
+    
+		    }Velocity2DDelayFrame<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 67:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[13];
+    
+		    }Velocity2D<bgcolor=0x2a6866>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0013\efd_0004_evc0013_00_0004.efx.2621987
+    
+	    };break;
+	    case 68:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(68);
+    
+		    }Velocity2DExpression<bgcolor=0x2f158b>;
+    
+	    };break;
+	    case 69:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint frameDelay;
+			    uint unkn2;
+    
+		    }Velocity3DDelayFrame<bgcolor=0x08a9e5>;
+    
+	    };break;
+	    case 70:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1;
+			    float unkn2[16];
+                uint unkn3;
+                float unkn4[6];
+		    }Velocity3D<bgcolor=0xfd1e6e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 71:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[21];
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }Velocity3DExpression<bgcolor=0x3a2006>;//Example: natives\NSW\vfx\editor\efd_ec\efd_ec030\efd_0004_ec030_00_0000.efx.2621987
+    
+	    };break;
+	    case 72:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint frameDelay;
+                uint unkn2;
+    
+		    }RotateAnimDelayFrame<bgcolor=0x2f158b>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 73:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                float unkn1[3];
+                uint unkn2;
+                uint unkn3;
+                float unkn4[8];
+                
+			    
+    
+		    }RotateAnim<bgcolor=0x3a2006>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 74:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(74);
+    
+		    }RotateAnimExpression<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 75:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint frameDelay;
+                uint unkn2;
+    
+		    }ScaleAnimDelayFrame<bgcolor=0x5eac94>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 76:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[16];            
+    
+		    }ScaleAnim<bgcolor=0x2a6866>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 77:
+	    {
+		    struct
+		    {
+    
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1;
+                uint unkn2;
+                uint unkn3;
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }ScaleAnimExpression<bgcolor=0xf57685>;//Example: natives\NSW\vfx\editor\efd_em\efd_em099\efd_0004_em099_00_0130.efx.2621987
+    
+	    };break;
+	    case 78:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[12];
+                int unknPathLength;
+                wstring unknPath;
+    
+		    }VanishArea3D<bgcolor=0x08a9e5>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 79:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(79);
+    
+		    }VanishArea3DExpression<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 80:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                int unkn1;
+                int unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int unkn7;
+                int unkn8;
+                int unkn9;
+    
+		    }Life<bgcolor=0x7a5736>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 81:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[4];
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }LifeExpression<bgcolor=0x5eac94>;//Example: natives\NSW\vfx\editor\efd_em\efd_em_shelltest\efd_0004_em000_02_0002.efx.2621987
+    
+	    };break;
+	    case 82:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1;
+                uint unkn2;
+                uint unkn3;
+                uint unkn4;
+                float unkn5;
+                float unkn6;
+                uint unkn7;
+                uint pathUnicodeCharCount;          
+                wstring uvsPath;
+		    }UVSequence<bgcolor=0x02b72e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 83:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[7];
+    
+		    }UVSequenceModifier<bgcolor=0x08a9e5>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0010\efd_0004_evc0010_00_0028.efx.2621987
+    
+	    };break;
+	    case 84:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(84);
+    
+		    }UVSequenceExpression<bgcolor=0x056e12>;
+    
+	    };break;
+	    case 85:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[13];
+    
+		    }UVScroll<bgcolor=0x85aa32>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 86:
+	    {
+		    struct//Struct may be incorrect, might not be fixed length
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[118];
+                uint uvs0PathUnicodeCharCount;
+                uint uvs1PathUnicodeCharCount;
+                uint uvs2PathUnicodeCharCount;
+                wstring uvs0Path;
+                wstring uvs1Path;
+                wstring uvs2Path;
+		    }TextureUnit<bgcolor=0x3f16f9>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0000.efx.2621987
+    
+	    };break;
+	    case 87:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(87);
+    
+		    }TextureUnitExpression<bgcolor=0x363669>;
+    
+	    };break;
+	    case 88:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                float unkn1;
+                uint unkn2;
+                uint unkn3;
+		    }TextureFilter<bgcolor=0x3a2006>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0000.efx.2621987
+    
+	    };break;
+	    case 89:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[8];
+    
+		    }EmitterShape2D<bgcolor=0x363669>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0013\efd_0004_evc0013_00_0004.efx.2621987
+    
+	    };break;
+	    case 90:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(90);
+    
+		    }EmitterShape2DExpression<bgcolor=0xf57685>;
+    
+	    };break;
+	    case 91:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                float unkn1[16];
+                ubyte unkn2;
+                float unkn3[3];
+			   
+		    }EmitterShape3D<bgcolor=0xbe9672>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 92:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                
+                uint unkn1[10];
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }EmitterShape3DExpression<bgcolor=0xbe9672>;//Example: natives\NSW\vfx\editor\efd_em\efd_em099\efd_0004_em099_00_0130.efx.2621987
+    
+	    };break;
+	    case 93:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1;
+                float unkn2[3];
+                
+		    }AlphaCorrection<bgcolor=0x731727>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 94:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(94);
+    
+		    }ContrastHighlighter<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 95:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                Color color0;//Unconfirmed
+                Color color1;//Unconfirmed
+			    float unkn1[4];
+    
+		    }ColorGrading<bgcolor=0xf57685>;
+    
+	    };break;
+	    case 96:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[10];
+    
+		    }Blink<bgcolor=0xe78607>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 97:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[8];
+    
+		    }Noise<bgcolor=0x056e12>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc1003\efd_0004_evc1003_00_0010.efx.2621987
+    
+	    };break;
+	    case 98:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[17];
+    
+		    }TexelChannelOperator<bgcolor=0xbe9672>;
+    
+	    };break;
+	    case 99:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn0;
+                int unkn1;
+                int unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int substruct1Length;
+                int substruct2Length;
+                int substruct3Length;
+                if (substruct1Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct1Length/4];
+                    }substruct1;
+                }
+                 if (substruct2Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct2Length/4];
+                    }substruct2;
+                }
+                 if (substruct3Length > 0)
+                {
+                    struct
+                    {
+                        float substructValue[substruct3Length/4];
+                    }substruct3;
+                }	
+    
+		    }TexelChannelOperatorClip<bgcolor=0xe78607>;//Example: natives\NSW\vfx\editor\efd_cm\efd_0004_cm_09_0011.efx.2621987
+    
+	    };break;
+	    case 100:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(100);
+    
+		    }TexelChannelOperatorExpression<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 101:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1[57];
+                ubyte unkn2;		    
+                uint unkn3[4];
+                uint boneNameLength;
+                wstring boneName;
+		    }TypeStrainRibbon<bgcolor=0x02b72e>;
+    
+	    };break;
+	    case 102:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1[14];
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }TypeStrainRibbonExpression<bgcolor=0x3a2006>;
+    
+	    };break;
+	    case 103:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1;
+                Color color0;
+                Color color1;
+			    float unkn2[73];
+                uint boneNameLength;
+                wstring boneName;
+    
+		    }TypeLightning3D<bgcolor=0x2f158b>;//Example: natives\NSW\vfx\editor\efd_pl\efd_h-bg\efd_0004_h-bg_20_0000.efx.2621987
+    
+	    };break;
+	    case 104:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1[38];
+    
+		    }TypeLightning3DExpression<bgcolor=0x08a9e5>;
+    
+	    };break;
+	    case 105:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(105);
+    
+		    }TypeLightning3DMaterial<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 106:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+				float unkn1;
+                int unkn2;
+                float unkn3;
+                int unkn4;
+                uint unkn5;
+                float unkn6;
+                float unkn7;
+                float unkn8;
+                float unkn9;
+                float unkn10;
+                float unkn11;
+                float unkn12;
+                float unkn13;
+                float unkn14;  
+                float unkn15;
+                float unkn16;
+                float unkn17;
+                int unkn18;
+                float unkn19;
+                uint unkn20;
+                float unkn21;
+                float unkn22;
+                float unkn23;
+                float unkn24;
+               
+    
+		    }ShaderSettings<bgcolor=0x02b72e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 107:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(107);
+    
+		    }ShaderSettingsExpression<bgcolor=0x056e12>;
+    
+	    };break;
+	    case 108:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                int unkn1;
+                float unkn2;
+                float unkn3;
+                float unkn4;			
+                Color color;
+		    }Distortion<bgcolor=0x0a2c0f>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 109:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(109);
+    
+		    }DistortionExpression<bgcolor=0x2a6866>;
+    
+	    };break;
+	    case 110:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(110);
+    
+		    }VolumetricLighting<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 111:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                uint rtexPathLength;
+                wstring rtexPath;
+    
+		    }RenderTarget<bgcolor=0x731727>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0013\efd_0004_evc0013_00_0004.efx.2621987
+    
+	    };break;
+	    case 112:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[3];
+    
+		    }PtLife<bgcolor=0x056e12>;//Example: natives\NSW\vfx\editor\efd_cm\efd_0004_cm_00_9150.efx.2621987
+    
+	    };break;
+	    case 113:
+	    {
+		    struct// This struct is wrong, will not work for all files
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1;
+                uint stringLength;
+                uint substructCount;
+                string behaviorString;
+                if (substructCount != 0)
+                {
+                    struct
+                    {
+                        uint substructLength;
+                        uint unkn1;
+                        uint unkn2;
+                        uint unkn3;
+                        uint unkn4;
+                        char behaviorPropertyString[substructLength-16];
+                    }property[substructCount]<optimize=false>;
+                }
+                
+                
+			    
+    
+		    }PtBehavior<bgcolor=0x02b72e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_ham\efd_0004_ham_10_0000.efx.2621987
+    
+	    };break;
+	    case 114:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(114);
+    
+		    }PtBehaviorClip<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 115:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint efxPathLength;
+				wstring efxPath;
+    
+		    }PlayEfx<bgcolor=0xfd1e6e>;//Example: natives\NSW\vfx\editor\efd_em\efd_em042\efd_0004_em042_00_0012.efx.2621987
+    
+	    };break;
+	    case 116:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[7];
+    
+		    }FadeByAngle<bgcolor=0xf57685>;//Example: natives\NSW\vfx\editor\efd_ot\efd_airou\efd_0004_airou_10_0120.efx.2621987
+    
+	    };break;
+	    case 117:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(117);
+    
+		    }FadeByAngleExpression<bgcolor=0xe23209>;
+    
+	    };break;
+	    case 118:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[6];
+    
+		    }FadeByEmitterAngle<bgcolor=0x02b72e>;
+    
+	    };break;
+	    case 119:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                float unkn1;
+                float unkn2;
+                float unkn3;
+                float unkn4;
+                      
+           
+    
+		    }FadeByDepth<bgcolor=0x2f158b>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 120:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    		    
+				int unkn1[5];
+                uint expressionLength;
+                ubyte expression[expressionLength];//Example: natives\NSW\vfx\editor\efd_cm\efd_0004_cm_01_0001.efx.2621987
+    
+		    }FadeByDepthExpression<bgcolor=0x731727>;
+    
+	    };break;
+	    case 121:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(121);
+    
+		    }FadeByOcclusion<bgcolor=0x5eac94>;
+    
+	    };break;
+	    case 122:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(122);
+    
+		    }FadeByOcclusionExpression<bgcolor=0x08a9e5>;
+    
+	    };break;
+	    case 123:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(123);
+    
+		    }FakeDoF<bgcolor=0x363669>;
+    
+	    };break;
+	    case 124:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(124);
+    
+		    }LuminanceBleed<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 125:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1;
+			    float unkn2[6];
+    
+		    }ScaleByDepth<bgcolor=0xfd1e6e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_50_0000.efx.2621987
+    
+	    };break;
+	    case 126:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1[62];
+			    
+    
+		    }TypeNodeBillboard<bgcolor=0x5eac94>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 127:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1[44];
+                uint expressionLength;
+                ubyte expression[expressionLength];
+    
+		    }TypeNodeBillboardExpression<bgcolor=0x3f16f9>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 128:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[11];
+    
+		    }UnitCulling<bgcolor=0xbe9672>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
+    
+	    };break;
+	    case 129:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(129);
+    
+		    }FluidEmitter2D<bgcolor=0x5eac94>;
+    
+	    };break;
+	    case 130:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(130);
+    
+		    }FluidSimulator2D<bgcolor=0x3a2006>;
+    
+	    };break;
+	    case 131:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint fileSize;
+                local int pos = FTell();
+                EFXR action_efxr;
+                FSeek(pos+fileSize);
+                
+		    }PlayEmitter<bgcolor=0xef6ade>;//Example: natives\NSW\vfx\editor\efd_ec\efd_ec017\efd_0004_ec017_00_0000.efx.2621987
+    
+	    };break;
+	    case 132:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[9];
+    
+		    }PtTransform3D<bgcolor=0xe78607>;//Example: natives\NSW\vfx\editor\efd_pl\efd_h-bg\efd_0004_h-bg_10_0001.efx.2621987
+    
+	    };break;
+	    case 133:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn0;
+                int unkn1;
+                int unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int substruct1Length;
+                int substruct2Length;
+                int substruct3Length;
+                if (substruct1Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct1Length/4];
+                    }substruct1;
+                }
+                 if (substruct2Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct2Length/4];
+                    }substruct2;
+                }
+                 if (substruct3Length > 0)
+                {
+                    struct
+                    {
+                        float substructValue[substruct3Length/4];
+                    }substruct3;
+                }	
+    
+		    }PtTransform3DClip<bgcolor=0x3f16f9>;//Example: natives\NSW\vfx\editor\efd_pl\efd_h-bg\efd_0004_h-bg_10_0001.efx.2621987
+    
+	    };break;
+	    case 134:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(134);
+    
+		    }PtTransform2D<bgcolor=0x731727>;
+    
+	    };break;
+	    case 135:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(135);
+    
+		    }PtTransform2DClip<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 136:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[4];
+    
+		    }PtVelocity3D<bgcolor=0xe78607>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc3027\efd_0004_evc3027_00_0007.efx.2621987
+    
+	    };break;
+	    case 137:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                uint unkn2;
+                uint unkn3;
+                uint unkn4;
+                uint unkn5;
+                uint unkn6;
+                uint unkn7;
+                uint unkn8;
+                uint substructLength;
+                uint unkn10;
+                uint unkn11;
+                uint unkn12;
+                uint unkn13;
+                uint unkn14;
+                uint unkn15;
+                uint unkn16;
+                uint unkn17;
+                uint unkn18;
+                struct
+                {
+                    int unknSubstructValue[substructLength/4];
+                }substruct;
+    
+		    }PtVelocity3DClip<bgcolor=0x3f16f9>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc3027\efd_0004_evc3027_00_0007.efx.2621987
+    
+	    };break;
+	    case 138:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(138);
+    
+		    }PtVelocity2D<bgcolor=0x731727>;
+    
+	    };break;
+	    case 139:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(139);
+    
+		    }PtVelocity2DClip<bgcolor=0xbe9672>;
+    
+	    };break;
+	    case 140:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(140);
+    
+		    }PtColliderAction<bgcolor=0x363669>;
+    
+	    };break;
+	    case 141:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(141);
+    
+		    }PtCollision<bgcolor=0xe78607>;
+    
+	    };break;
+	    case 142:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                uint unkn2;
+                Color color0;        
+    
+		    }PtColor<bgcolor=0xe78607>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0002\efd_0004_evc0002_00_0012.efx.2621987
+    
+	    };break;
+	    case 143:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                uint unkn2;
+                uint unkn3;
+                uint unkn4;
+                uint unkn5;
+                uint unkn6;
+                uint unkn7;
+                uint unkn8;
+                uint substructLength;
+                uint unkn10;
+                uint unkn11;
+                uint unkn12;
+                uint unkn13;
+                uint unkn14;
+                uint unkn15;
+                uint unkn16;
+                uint unkn17;
+                uint unkn18;
+                struct
+                {
+                    int unknSubstructValue[substructLength/4];
+                }substruct;
+                
+		    }PtColorClip<bgcolor=0x3a2006>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0002\efd_0004_evc0002_00_0012.efx.2621987
+    
+	    };break;
+	    case 144:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(144);
+    
+		    }PtUvSequence<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 145:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(145);
+    
+		    }PtUvSequenceClip<bgcolor=0x2a6866>;
+    
+	    };break;
+	    case 146:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(146);
+    
+		    }MeshEmitter<bgcolor=0x3f16f9>;
+    
+	    };break;
+	    case 147:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(147);
+    
+		    }MeshEmitterClip<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 148:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(148);
+    
+		    }MeshEmitterExpression<bgcolor=0xef6ade>;
+    
+	    };break;
+	    case 149:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(149);
+    
+		    }ScreenSpaceEmitter<bgcolor=0x3f16f9>;
+    
+	    };break;
+	    case 150:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[20];
+    
+		    }VectorFieldParameter<bgcolor=0x731727>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 151:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn0;
+                int unkn1;
+                int unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int substruct1Length;
+                int substruct2Length;
+                int substruct3Length;
+                if (substruct1Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct1Length/4];
+                    }substruct1;
+                }
+                 if (substruct2Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct2Length/4];
+                    }substruct2;
+                }
+                 if (substruct3Length > 0)
+                {
+                    struct
+                    {
+                        float substructValue[substruct3Length/4];
+                    }substruct3;
+                }	
+    
+		    }VectorFieldParameterClip<bgcolor=0xe78607>;//Example: natives\NSW\vfx\editor\efd_em\efd_em004\efd_0004_em004_00_0009.efx.2621987
+    
+	    };break;
+	    case 152:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(152);
+    
+		    }VectorFieldParameterExpression<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 153:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(153);
+    
+		    }GlobalVectorField<bgcolor=0x2a6866>;
+    
+	    };break;
+	    case 154:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(154);
+    
+		    }GlobalVectorFieldClip<bgcolor=0x363669>;
+    
+	    };break;
+	    case 155:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(155);
+    
+		    }GlobalVectorFieldExpression<bgcolor=0x08a9e5>;
+    
+	    };break;
+	    case 156:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(156);
+    
+		    }DirectionalFieldParameter<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 157:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(157);
+    
+		    }DirectionalFieldParameterClip<bgcolor=0x7a5736>;
+    
+	    };break;
+	    case 158:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(158);
+    
+		    }DirectionalFieldParameterExpression<bgcolor=0x02b72e>;
+    
+	    };break;
+	    case 159:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(159);
+    
+		    }DepthOperator<bgcolor=0x0a2c0f>;
+    
+	    };break;
+	    case 160:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(160);
+    
+		    }PlaneCollider<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 161:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(161);
+    
+		    }PlaneColliderExpression<bgcolor=0x02b72e>;
+    
+	    };break;
+	    case 162:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(162);
+    
+		    }DepthOcclusion<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 163:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(163);
+    
+		    }ShapeOperator<bgcolor=0xf57685>;
+    
+	    };break;
+	    case 164:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(164);
+    
+		    }ShapeOperatorExpression<bgcolor=0x731727>;
+    
+	    };break;
+	    case 165:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(165);
+    
+		    }WindInfluence3DDelayFrame<bgcolor=0x5eac94>;
+    
+	    };break;
+	    case 166:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(166);
+    
+		    }WindInfluence3D<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 167:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                float unkn1[8];
+                uint unknPathLength;
+                wstring unknPath;		  
+    
+		    }Attractor<bgcolor=0x3a2006>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 168:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[18];
+                
+    
+		    }AttractorClip<bgcolor=0xbe9672>;//Example: natives\NSW\vfx\editor\efd_pl\efd_lan\efd_0004_lan_10_0000.efx.2621987
+    
+	    };break;
+	    case 169:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(169);
+    
+		    }AttractorExpression<bgcolor=0xe78607>;
+    
+	    };break;
+	    case 170:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(170);
+    
+		    }CustomComputeShader<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 171:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                uint unkn1;
+                uint unkn2;
+			    uint unkn3;
+                Color color1;
+                Color color2;
+                float unkn4;
+                float unkn5;
+                float unkn6;
+                float unkn7;
+                float unkn8;
+                float unkn9;
+                float unkn10;
+                float unkn11;
+                
+		    }TypeGpuBillboard<bgcolor=0xfd1e6e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 172:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(172);
+    
+		    }TypeGpuBillboardExpression<bgcolor=0xbe9672>;
+    
+	    };break;
+	    case 173:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                uint unkn2;
+                uint unkn3;
+                Color color0;
+                Color color1;
+                uint unkn4[16];
+    
+		    }TypeGpuPolygon<bgcolor=0x363669>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc1003\efd_0004_evc1003_00_0010.efx.2621987
+    
+	    };break;
+	    case 174:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[5];
+                Color color0;
+                Color color1;
+                float unkn2[8];
+		    }TypeGpuRibbonFollow<bgcolor=0x4081ec>;//Example: natives\NSW\vfx\editor\efd_pl\efd_h-bg\efd_0004_h-bg_10_0001.efx.2621987
+    
+	    };break;
+	    case 175:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                uint unkn2;
+                Color color0;
+                Color color1;
+                uint unkn3[21];
+		    }TypeGpuRibbonLength<bgcolor=0x7a5736>;//Example: natives\NSW\vfx\editor\efd_ot\efd_ninken\efd_0004_ninken_00_0090.efx.2621987
+    
+	    };break;
+	    case 176:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(176);
+    
+		    }TypeGpuMesh<bgcolor=0x2a6866>;
+    
+	    };break;
+	    case 177:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(177);
+    
+		    }TypeGpuMeshExpression<bgcolor=0x731727>;
+    
+	    };break;
+	    case 178:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(178);
+    
+		    }TypeGpuMeshTrail<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 179:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(179);
+    
+		    }TypeGpuMeshTrailClip<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 180:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(180);
+    
+		    }TypeGpuMeshTrailExpression<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 181:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1;
+                Color color0;
+                Color color1;
+                float unkn2[85];
+                ushort unkn3;
+		    }TypeGpuLightning3D<bgcolor=0xbe9672>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc1016\efd_0004_evc1016_01_0001.efx.2621987
+    
+	    };break;
+	    case 182:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;//This struct might not be right
+    
+		    }EmitterPriority<bgcolor=0x056e12>;//Example: natives\NSW\vfx\editor\efd_pl\efd_s-axe\efd_0004_s-axe_10_0000.efx.2621987
+    
+	    };break;
+	    case 183:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(183);
+    
+		    }DrawOverlay<bgcolor=0x731727>;
+    
+	    };break;
+	    case 184:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(184);
+    
+		    }VectorField<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 185:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(185);
+    
+		    }VolumeField<bgcolor=0xf57685>;
+    
+	    };break;
+	    case 186:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(186);
+    
+		    }DirectionalField<bgcolor=0x5eac94>;
+    
+	    };break;
+	    case 187:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint frameDelay;
+                uint unkn1;
+    
+		    }AngularVelocity3DDelayFrame<bgcolor=0x5eac94>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0006\efd_0004_evc0006_00_0000.efx.2621987
+    
+	    };break;
+	    case 188:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    float unkn1[20];
+    
+		    }AngularVelocity3D<bgcolor=0x056e12>;//Example: natives\NSW\vfx\editor\efd_pl\efd_g-swd\efd_0004_g-swd_02_0000.efx.2621987
+    
+	    };break;
+	    case 189:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(189);
+    
+		    }PtAngularVelocity3D<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 190:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(190);
+    
+		    }PtAngularVelocity3DExpression<bgcolor=0xfd1e6e>;
+    
+	    };break;
+	    case 191:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(191);
+    
+		    }AngularVelocity2DDelayFrame<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 192:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint unkn1[15];
+    
+		    }AngularVelocity2D<bgcolor=0xf57685>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc0013\efd_0004_evc0013_00_0004.efx.2621987
+    
+	    };break;
+	    case 193:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(193);
+    
+		    }PtAngularVelocity2D<bgcolor=0x08a9e5>;
+    
+	    };break;
+	    case 194:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(194);
+    
+		    }PtAngularVelocity2DExpression<bgcolor=0x4081ec>;
+    
+	    };break;
+	    case 195:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+		    }IgnorePlayerColor<bgcolor=0x85aa32>;//Example: natives\NSW\vfx\editor\efd_pl\efd_bow\efd_0004_bow_00_0100.efx.2621987
+    
+	    };break;
+	    case 196:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    uint frameDelay;
+                uint unkn1;
+    
+		    }ProceduralDistortionDelayFrame<bgcolor=0x4081ec>;//Example: natives\NSW\vfx\editor\efd_evc\efd_evc3026\efd_0004_evc3026_00_0007.efx.2621987
+    
+	    };break;
+	    case 197:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+                int unkn1;
+                float unkn2[18];
+    
+		    }ProceduralDistortion<bgcolor=0x85aa32>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
+    
+	    };break;
+	    case 198:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn0;
+                int unkn1;
+                int unkn2;
+                int unkn3;
+                int unkn4;
+                int unkn5;
+                int unkn6;
+                int substruct1Length;
+                int substruct2Length;
+                int substruct3Length;
+                if (substruct1Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct1Length/4];
+                    }substruct1;
+                }
+                 if (substruct2Length > 0)
+                {
+                    struct
+                    {
+                        int substructValue[substruct2Length/4];
+                    }substruct2;
+                }
+                 if (substruct3Length > 0)
+                {
+                    struct
+                    {
+                        float substructValue[substruct3Length/4];
+                    }substruct3;
+                }
+    
+		    }ProceduralDistortionClip<bgcolor=0xfd1e6e>;//Example: natives\NSW\vfx\editor\efd_cm\efd_0004_cm_00_9100.efx.2621987
+    
+	    };break;
+	    case 199:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(199);
+    
+		    }ProceduralDistortionExpression<bgcolor=0x2f158b>;
+    
+	    };break;
+	    case 200:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(200);
+    
+		    }TestBehaviorUpdater<bgcolor=0x02b72e>;
+    
+	    };break;
+	    case 201:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(201);
+    
+		    }StretchBlur<bgcolor=0x02b72e>;
+    
+	    };break;
+	    case 202:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(202);
+    
+		    }StretchBlurExpression<bgcolor=0x85aa32>;
+    
+	    };break;
+	    case 203:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(203);
+    
+		    }EmitterHSV<bgcolor=0x056e12>;
+    
+	    };break;
+	    case 204:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(204);
+    
+		    }EmitterHSVExpression<bgcolor=0x0a2c0f>;
+    
+	    };break;
+	    case 205:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(205);
+    
+		    }FlowMap<bgcolor=0x02b72e>;
+    
+	    };break;
+	    case 206:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(206);
+    
+		    }RgbCommon<bgcolor=0x056e12>;
+    
+	    };break;
+	    case 207:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(207);
+    
+		    }RgbWater<bgcolor=0xef6ade>;
+    
+	    };break;
+	    case 208:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    int unkn1;//Might be wrong
+                
+               
+		    }EmitMask<bgcolor=0xbe9672>;//Example: natives\NSW\vfx\editor\efd_cm\efd_0004_cm_10_0040.efx.2621987
+    
+	    };break;
+	    case 209:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(209);
+    
+		    }TypeModularBillboard<bgcolor=0x3a2006>;
+    
+	    };break;
+	    case 210:
+	    {
+		    struct
+		    {
+			    uint itemType<bgcolor=0x00CC00>;
+				uint unknSeqNum;
+    
+			    //STRUCT UNMAPPED
+				Printf("Unmapped Struct, template stopping.");
+				writeErrorToFile(210);
+    
+		    }ItemNum<bgcolor=0x3f16f9>;
+    
+	    };break;
+        default:
+        {
+            Printf("Struct ID does not match any known structs, template stopping.");            
+				    writeErrorToFile(999);
+        };
+    }
+    
+}
+
+
+
+//DISPLAY
+EFXR main_efxr;
+Printf("Template finished executing.");
