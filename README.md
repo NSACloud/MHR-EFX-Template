@@ -7,8 +7,9 @@ If you find out what any of the unknowns do, submit a pull request or an issue a
 
 Read the template for notes. 
 
-##Installation
+## Installation
 Requires **[010 Editor](https://www.sweetscape.com/010editor/)**
+
 Install the template under Templates > View Installed Templates > Add
 
 ## Credits
