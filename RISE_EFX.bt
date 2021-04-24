@@ -3,12 +3,20 @@
 //
 //      File: 
 //   Authors: NSA Cloud
-//   Version: V1
+//   Version: V2
 //   Purpose: Monster Hunter Rise EFX
 //  Category: 
 // File Mask: *.efx.2621987
 //  ID Bytes: 
 //   History: 
+/*
+    V2 4/24/2021
+    -----
+    Fixed missing float on TypeRibbonFollow. 
+    Labeled unknowns for Life, UVSequence, Spawn, TypeMesh - Thank you to thezippotm and Crimson 
+    -----
+*/
+
 //------------------------------------------------
 //GitHub: https://github.com/NSACloud/MHR-EFX-Template
 //Monster Hunter Modding Discord: https://discord.gg/gJwMdhK
@@ -437,8 +445,8 @@ void GetEFXItemStruct(int itemType)
                 int unkn6;
                 int unkn7;
                 int unkn8;
-                int unkn9;
-                int unkn10;
+                int spawnDelay;
+                int spawnDelayRandom;
 			   
     
 		    }Spawn<bgcolor=0x85aa32>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0010.efx.2621987
@@ -817,25 +825,25 @@ void GetEFXItemStruct(int itemType)
                 int unkn7;
                 int unkn8;
                 int unkn9;
-                floatXYZ unkn10;//scale?                        
+                floatXYZ unkn10;                      
                 int unkn11;
                 int unkn12;
                 int unkn13;
                 int unkn14;
-                int unkn15;
-                int unkn16;
-                int unkn17;
-                int unkn18;
-                int unkn19;
-                float unkn20;
-                float unknX1;
-                float unknX2;
-                float unknY1;
-                float unknY2;
-                float unknZ1;
-                float unknZ2;
-                float unkn21;
-                int unkn22;
+                float rotationX;
+                float rotationXRandom;
+                float rotationY;
+                float rotationYRandom;
+                float rotationZ;
+                float rotationRandom;
+                float scaleX;
+                float scaleXRandom;
+                float scaleY;
+                float scaleYRandom;
+                float scaleZ;
+                float scaleZRandom;
+                float overallScale;
+                float overallScaleRandom;
                 int unkn23;
                 int unkn24;
                 int texCount;
@@ -850,8 +858,8 @@ void GetEFXItemStruct(int itemType)
                     struct
                     {
                         int offset;
-                        float texparam[offset/4];
-                    }TexParams<optimize=false>;
+                        float mdfProperty[offset/4];
+                    }mdfProperties<optimize=false>;
                    
                 }
                 int texPathLength;
@@ -864,7 +872,7 @@ void GetEFXItemStruct(int itemType)
                 }
                 else
                 {
-                    uint hash;
+                    uint hash;//Should correspond to a property in the mdf
                     if (texPathLength != 0)
                     {
                         struct
@@ -1000,6 +1008,7 @@ void GetEFXItemStruct(int itemType)
                 float unkn27;
                 float unkn28;
                 float unkn29;
+                float unkn30;
                      
     
 		    }TypeRibbonFollow<bgcolor=0x3f16f9>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_00_0000.efx.2621987
@@ -1730,12 +1739,12 @@ void GetEFXItemStruct(int itemType)
 		    {
 			    uint itemType<bgcolor=0x00CC00>;
 				uint unknSeqNum;
-                int unkn1;
-                int unkn2;
-                int unkn3;
-                int unkn4;
-                int unkn5;
-                int unkn6;
+                int fadeInDuration;
+                int fadeInDurationRandom;
+                int duration;
+                int durationRandom;
+                int fadeOutDuration;
+                int fadeOutDurationRandom;
                 int unkn7;
                 int unkn8;
                 int unkn9;
@@ -1765,11 +1774,11 @@ void GetEFXItemStruct(int itemType)
 				uint unknSeqNum;
                 uint unkn1;
                 uint unkn2;
-                uint unkn3;
-                uint unkn4;
-                float unkn5;
-                float unkn6;
-                uint unkn7;
+                uint startingFrame;
+                uint startingFrameRandom;
+                float animationSpeed;
+                float animationSpeedRandom;
+                uint mode<comment="0 - Show only starting frame,1 - Looped Animation, 2 - Play once and disappear after last frame, 3 - Play once and stay on last frame until end of duration in Life struct.">;
                 uint pathUnicodeCharCount;          
                 wstring uvsPath;
 		    }UVSequence<bgcolor=0x02b72e>;//Example: natives\NSW\vfx\editor\efd_pl\efd_l-swd\efd_0004_l-swd_99_0000.efx.2621987
