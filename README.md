@@ -15,3 +15,5 @@ Install the template under Templates > View Installed Templates > Add
 
 Thank you to:
 * **[wwylele](https://github.com/wwylele)** - TDB Dump
+* **Crimson** - Labeling Unknowns
+* **thezippotm** - Labeling Unknowns
