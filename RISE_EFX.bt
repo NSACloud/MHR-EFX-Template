@@ -3,12 +3,21 @@
 //
 //      File: 
 //   Authors: NSA Cloud
-//   Version: V2
+//   Version: V3
 //   Purpose: Monster Hunter Rise EFX
 //  Category: 
 // File Mask: *.efx.2621987
 //  ID Bytes: 
 //   History: 
+/*
+    V3 2/11/2022
+    -----
+    Changed unknEFXValue in subheader to efxParentOptionsRelation
+        - Now displays efx entry that the relation entry is associated with
+    Changed unkn1 in ParentOptions to isUsingBone
+    -----
+*/
+
 /*
     V2 4/24/2021
     -----
@@ -140,9 +149,9 @@ typedef struct
     uint collisionEffectCount<bgcolor=0x224422>;
     uint collisionEffectLength;
     uint boneCount<bgcolor=0x226622>;
-    uint unknEntryCount;
+    uint parentOptionsEntryCount;
     uint unkn8;
-}Header<bgcolor=0x2f4f4f>;
+}Header<optimize = false, bgcolor=0x2f4f4f>;
 typedef struct
 {
     string str;
@@ -174,6 +183,11 @@ typedef struct
         if (header.collisionEffectCount > 0)
         EntryName collision_effect_name[header.collisionEffectCount]<read=ReadStr>;
 }EntryNames;
+typedef struct 
+{
+    local int entryIndex = -999;
+    short relationValue;
+}efxParentOptionsRelation<optimize = false>;
 
 typedef struct
 {
@@ -201,8 +215,11 @@ typedef struct
         }boneValues[header.boneCount];
     }
 
-    short unknEFXValue[header.unknEntryCount];   
-}SubHeader<bgcolor=0xffdddd>;
+    struct
+    {
+        efxParentOptionsRelation relation[header.parentOptionsEntryCount]<read = ReadParentOptionsRelation>;
+    }parentOptionRelations;
+}SubHeader<optimize = false,bgcolor=0xffdddd>;
 typedef struct
 {
     uint actionUnkn0;
@@ -296,6 +313,19 @@ typedef struct
     */
 }EOF<bgcolor=0x000000>;
 
+void updateParentOptionRelations(Header& header,SubHeader& subheader,EFXEntries& mainBody){
+    local int currentRelationIndex = 0;
+    local int i;
+    Printf("%i\n",header.entryCount);
+    for(i=0;i<header.entryCount;i++)
+    {    
+            if (exists(mainBody.entry[i].ParentOptions))
+            {
+                subheader.parentOptionRelations.relation[currentRelationIndex].entryIndex = i;
+                currentRelationIndex++;                                       
+            }
+    }
+};
 
 typedef struct
 {
@@ -311,6 +341,7 @@ typedef struct
         FieldParameterValues fieldParameterValues<optimize=false, bgcolor=0xAAFFAA>;
     }
     EFXEntries mainBody;
+    updateParentOptionRelations(header,subheader,mainBody);
     if (header.collisionEffectCount != 0)
     {
         CollisionEffects collisionEffects<bgcolor=0xEEBBEE>;
@@ -320,7 +351,21 @@ typedef struct
     
 }EFXR<optimize=false>;
 
+
 //READ FUNCTIONS
+string ReadParentOptionsRelation(efxParentOptionsRelation& input){
+    string s;
+    if (input.entryIndex != -999)
+    {
+        SPrintf(s, "%i, %s",input.relationValue,parentof(parentof(parentof(input))).strings.efx_name[input.entryIndex].str);
+    }
+    else
+    {
+        s = "Failed to finish parsing efxr, index error";
+    }
+    return s;
+};
+
 
 string ReadStr(EntryName& input){
     string s;
@@ -646,7 +691,7 @@ void GetEFXItemStruct(int itemType)
                 intXYZ TranslationTrackingMode;
                 intXYZ RotationTrackingMode;
                 intXYZ ScaleTrackingMode;
-			    ubyte unkn1;
+			    ubyte isUsingBone;
                 float unkn2;
                 int unkn3;
                 int unkn4;

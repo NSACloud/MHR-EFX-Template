@@ -5,6 +5,8 @@ Not all attributes are fully mapped yet.
 
 If you find out what any of the unknowns do, submit a pull request or an issue and I'll add the changes.
 
+Set the character set to UTF-8 in View > Character Set
+
 Read the template for notes. 
 
 ## Installation
