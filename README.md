@@ -16,6 +16,12 @@ Install the template under Templates > View Installed Templates > Add
 
 ## Change Log
 ```
+V5 6/25/2022
+-----
+	Added full sunbreak update support. New structs added. All efx files in sunbreak should work upon release.
+	Added path entry to field parameters
+	Droppped support for pre sunbreak update efx. Use the pre sunbreak efx template for pre sunbreak efx.
+-----
 V4 5/29/2022
 -----
 	Template now works on all efx files in the game (As of pre Sunbreak expansion)
