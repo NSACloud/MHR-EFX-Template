@@ -16,6 +16,12 @@ Install the template under Templates > View Installed Templates > Add
 
 ## Change Log
 ```
+V6 7/1/2022
+-----
+Reworked template structure to allow for iteration over attributes.
+Moved field parameters to be parsed after actions
+Changed unkn8 in header to unknFlag
+-----
 V5 6/25/2022
 -----
 	Added full sunbreak update support. New structs added. All efx files in sunbreak should work upon release.
