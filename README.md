@@ -5,9 +5,23 @@ Not all attributes are fully mapped yet.
 
 If you find out what any of the unknowns do, submit a pull request or an issue and I'll add the changes.
 
-Set the character set to UTF-8 in View > Character Set
+Be sure to change the character set to UTF-8 in View > Character Set or text will be garbled.
 
 Read the template for notes. 
+
+## EFX Color Change Script
+![image](https://user-images.githubusercontent.com/46909075/213036601-b4a7c37e-c38a-44b3-a565-515ad376d55c.png)
+
+
+![image](https://user-images.githubusercontent.com/46909075/213037217-9c32443a-156d-4b40-8204-98c98aaa8b95.png)
+
+The **EFX_COLOR_CHANGE.1sc** script allows you to change the color of all entries in an EFX file. To use it, first install it under Scripts > View Install Scripts > Add.
+
+Then with an EFX file open, run the script from the Scripts menu.
+
+There are configurable options if you open the script file. You can enable or disable changing the colors of certain structs and also set the default colors.
+
+The script is not intended to do all of the work. It will not work perfectly in all cases and you may have to manually tweak some things.
 
 ## Installation
 Requires **[010 Editor](https://www.sweetscape.com/010editor/)**
@@ -16,6 +30,14 @@ Install the template under Templates > View Installed Templates > Add
 
 ## Change Log
 ```
+V7 1/17/2023
+-----
+Usability Improvements:
+    -   EFX entries can now be parented to a bone easily by entering a bone name in ParentOptions attributes. 
+        The template will handle all of the necessary changes to make it work.
+Labeled more color attributes
+Labeled some unknowns related to collision effects
+-----
 V6 7/1/2022
 -----
 Reworked template structure to allow for iteration over attributes.
