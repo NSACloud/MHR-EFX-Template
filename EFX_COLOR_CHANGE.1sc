@@ -1,0 +1,368 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.1 Script File
+//
+//      File: EFX Color Change Script
+//   Authors: NSA Cloud
+//   Version: V1
+//   Purpose: Script to change color of all efx entries in an efx file.
+//  Category: 
+//   History: 
+//------------------------------------------------
+
+// --------------  
+// OPTIONS
+
+local string    DEFAULT_COLOR = "240,40,40,999";
+local string    DEFAULT_SECONDARY_COLOR = "220,20,20,999";
+ubyte SET_PRIMARY = TRUE;
+ubyte SET_SECONDARY = TRUE;//Change secondary color of struct if present
+//Set to FALSE to not change the color of the struct
+ubyte       CHANGE_ColorGrading = TRUE;
+ubyte       CHANGE_Distortion = TRUE;
+ubyte       CHANGE_PtColor = TRUE;
+ubyte       CHANGE_RgbCommon = TRUE;
+ubyte       CHANGE_TypeBillboard2D = TRUE;
+ubyte       CHANGE_TypeBillboard3D = TRUE;
+ubyte       CHANGE_TypeGpuBillboard = TRUE;
+ubyte       CHANGE_TypeGpuLightning3D = TRUE;
+ubyte       CHANGE_TypeGpuRibbonFollow = TRUE;
+ubyte       CHANGE_TypeGpuRibbonLength = TRUE;
+ubyte       CHANGE_TypeLightning3D = TRUE;
+ubyte       CHANGE_TypeNoDraw = TRUE;
+ubyte       CHANGE_TypeNodeBillboard = TRUE;
+ubyte       CHANGE_TypeMesh = TRUE;
+ubyte       CHANGE_TypePolygon = TRUE;
+ubyte       CHANGE_TypeRibbonChain = TRUE;
+ubyte       CHANGE_TypeRibbonFixEnd = TRUE;
+ubyte       CHANGE_TypeRibbonLightweight = TRUE;
+ubyte       CHANGE_TypeStrainRibbon = TRUE;
+
+// --------------  
+
+//Do not change anything below this point unless you know what you're doing
+
+
+uint SCRIPTVERSION = 1;
+ubyte checkColorAttribute(string structName)
+{
+    local ubyte result = FALSE;
+    switch (structName)
+    {
+            case "PtColor":
+            {
+                    if(CHANGE_PtColor)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "RgbCommon":
+            {
+                    if(CHANGE_RgbCommon)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeNoDraw":
+            {
+                    if(CHANGE_TypeNoDraw)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeBillboard2D":
+            {
+                    if(CHANGE_TypeBillboard2D)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeBillboard3D":
+            {
+                    if(CHANGE_TypeBillboard3D)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "ColorGrading":
+            {
+                    if(CHANGE_ColorGrading)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "Distortion":
+            {
+                    if(CHANGE_Distortion)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeNodeBillboard":
+            {
+                    if(CHANGE_TypeNodeBillboard)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeGpuBillboard":
+            {
+                    if(CHANGE_TypeGpuBillboard)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeGpuLightning3D":
+            {
+                    if(CHANGE_TypeGpuLightning3D)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeGpuRibbonFollow":
+            {
+                    if(CHANGE_TypeGpuRibbonFollow)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeGpuRibbonLength":
+            {
+                    if(CHANGE_TypeGpuRibbonLength)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeLightning3D":
+            {
+                    if(CHANGE_TypeLightning3D)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeMesh":
+            {
+                    if(CHANGE_TypeMesh)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypePolygon":
+            {
+                    if(CHANGE_TypePolygon)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeRibbonChain":
+            {
+                    if(CHANGE_TypeRibbonChain)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeStrainRibbon":
+            {
+                    if(CHANGE_TypeStrainRibbon)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeRibbonFixEnd":
+            {
+                    if(CHANGE_TypeRibbonFixEnd)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+            case "TypeRibbonLightweight":
+            {
+                    if(CHANGE_TypeRibbonLightweight)
+                    {
+                        result = TRUE;
+                    }
+            };break;
+    }
+    return result;
+}
+Printf("MH Rise Sunbreak EFX Color Change Script V%i\nhttps://github.com/NSACloud/MHR-EFX-Template\n",SCRIPTVERSION);
+local int i;
+local int j;
+local int k;
+local int currentSizeDifference = 0;
+if (SET_PRIMARY)
+{
+    local string COLORSTRING = InputString("Set Primary EFX Color","Enter the color you want to change all efx entries to. (Red,Green,Blue,Alpha)\n\nSet the alpha to 999 to use the existing alpha of the color.  ",DEFAULT_COLOR);
+}
+if (SET_SECONDARY)
+{
+    local string COLORSTRING2 = InputString("Set Secondary EFX Color","Enter the color you want to change all efx entries to. (Red,Green,Blue,Alpha)\n\nSet the alpha to 999 to use the existing alpha of the color.  ",DEFAULT_SECONDARY_COLOR);
+}
+local int RED = 0;
+local int GREEN = 0;
+local int BLUE = 0;
+local int ALPHA = 0;
+
+local int RED2 = 0;
+local int GREEN2 = 0;
+local int BLUE2 = 0;
+local int ALPHA2 = 0;
+local string itemEnum;
+if (SET_PRIMARY)
+{
+    SScanf( COLORSTRING, "%i,%i,%i,%i", RED,GREEN,BLUE,ALPHA);
+}
+if (SET_SECONDARY)
+{
+    SScanf( COLORSTRING2, "%i,%i,%i,%i", RED2,GREEN2,BLUE2,ALPHA2);
+}
+
+Printf("\nSetting EFX colors...\n");
+for(i=main_efxr.header.entryCount-1;i>=0;i--)
+	{
+		for(j=main_efxr.mainBody.entry[i].attributeCount-1;j>=0;j--)
+	    {
+            itemEnum = EnumToString(main_efxr.mainBody.entry[i].attribute[j].itemType);
+            if (checkColorAttribute(itemEnum))
+            {
+                Printf("Changed EFX Entry %i (%s) - %s\n",i,main_efxr.strings.efx_name[i].str,itemEnum);
+                if (SET_PRIMARY)
+                {
+                    if (exists(main_efxr.mainBody.entry[i].attribute[j].color))
+                    {
+                        main_efxr.mainBody.entry[i].attribute[j].color.red = RED;
+                        main_efxr.mainBody.entry[i].attribute[j].color.green = GREEN;
+                        main_efxr.mainBody.entry[i].attribute[j].color.blue = BLUE;
+                        if (ALPHA != 999)
+                        {
+                            main_efxr.mainBody.entry[i].attribute[j].color.alpha = ALPHA;
+                        }
+                    }
+                    if (exists(main_efxr.mainBody.entry[i].attribute[j].color0))
+                    {
+                        main_efxr.mainBody.entry[i].attribute[j].color0.red = RED;
+                        main_efxr.mainBody.entry[i].attribute[j].color0.green = GREEN;
+                        main_efxr.mainBody.entry[i].attribute[j].color0.blue = BLUE;
+                        if (ALPHA != 999)
+                        {
+                            main_efxr.mainBody.entry[i].attribute[j].color0.alpha = ALPHA;
+                        }
+                    }
+                }
+                if (SET_SECONDARY)
+                {
+                    if (exists(main_efxr.mainBody.entry[i].attribute[j].color1))
+                    {
+                        main_efxr.mainBody.entry[i].attribute[j].color1.red = RED2;
+                        main_efxr.mainBody.entry[i].attribute[j].color1.green = GREEN2;
+                        main_efxr.mainBody.entry[i].attribute[j].color1.blue = BLUE2;
+                        if (ALPHA2 != 999)
+                        {
+                            main_efxr.mainBody.entry[i].attribute[j].color1.alpha = ALPHA2;
+                        }
+                    }
+                    if (exists(main_efxr.mainBody.entry[i].attribute[j].color2))
+                    {
+                        main_efxr.mainBody.entry[i].attribute[j].color2.red = RED2;
+                        main_efxr.mainBody.entry[i].attribute[j].color2.green = GREEN2;
+                        main_efxr.mainBody.entry[i].attribute[j].color2.blue = BLUE2;
+                        if (ALPHA2 != 999)
+                        {
+                            main_efxr.mainBody.entry[i].attribute[j].color2.alpha = ALPHA2;
+                        }
+                    }
+                    if (exists(main_efxr.mainBody.entry[i].attribute[j].color3))
+                    {
+                        main_efxr.mainBody.entry[i].attribute[j].color3.red = RED2;
+                        main_efxr.mainBody.entry[i].attribute[j].color3.green = GREEN2;
+                        main_efxr.mainBody.entry[i].attribute[j].color3.blue = BLUE2;
+                        if (ALPHA2 != 999)
+                        {
+                            main_efxr.mainBody.entry[i].attribute[j].color3.alpha = ALPHA2;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+for(i=main_efxr.header.actionCount-1;i>=0;i--)
+	{
+        currentSizeDifference = 0;
+        if (EnumToString(main_efxr.action[i].attribute.itemType) == "PlayEmitter")
+        {
+            
+            
+            for(j=main_efxr.action[i].attribute.action_efxr.header.entryCount-1;j>=0;j--)
+	        {
+                for(k=main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attributeCount-1;k>=0;k--)
+	                {
+                        itemEnum = EnumToString(main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].itemType);
+                        if (checkColorAttribute(itemEnum))
+                        {
+                            Printf("Changed Action %i EFX Entry %i (%s) - %s\n",i,j,main_efxr.action[i].attribute.action_efxr.strings.efx_name[j].str,itemEnum);
+                            if (SET_PRIMARY)
+                            {
+                                if (exists(main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color))
+                                {
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color.red = RED;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color.green = GREEN;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color.blue = BLUE;
+                                    if (ALPHA != 999)
+                                    {
+                                        main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color.alpha = ALPHA;
+                                    }
+                                }
+                                if (exists(main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color0))
+                                {
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color0.red = RED;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color0.green = GREEN;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color0.blue = BLUE;
+                                    if (ALPHA != 999)
+                                    {
+                                        main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color0.alpha = ALPHA;
+                                    }
+                                }
+                            }
+
+                            if (SET_SECONDARY)
+                            {
+                                if (exists(main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color1))
+                                {
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color1.red = RED2;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color1.green = GREEN2;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color1.blue = BLUE2;
+                                    if (ALPHA2 != 999)
+                                    {
+                                        main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color1.alpha = ALPHA2;
+                                    }
+                                }
+                                if (exists(main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color2))
+                                {
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color2.red = RED2;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color2.green = GREEN2;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color2.blue = BLUE2;
+                                    if (ALPHA2 != 999)
+                                    {
+                                        main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color2.alpha = ALPHA2;
+                                    }
+                                }
+                                if (exists(main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color3))
+                                {
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color3.red = RED2;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color3.green = GREEN2;
+                                    main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color3.blue = BLUE2;
+                                    if (ALPHA2 != 999)
+                                    {
+                                        main_efxr.action[i].attribute.action_efxr.mainBody.entry[j].attribute[k].color3.alpha = ALPHA2;
+                                    }
+                                }
+                            }
+                            
+                            
+                        }
+                    }
+                
+            }
+        }
+    }
+Printf("\nChanged all EFX colors.\n");
